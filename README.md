@@ -62,10 +62,6 @@ Attention à ne pas stocker de données sensibles dans votre repo.
 
 ### Création de l'image Docker
 
-<p align="center">
-  <img src=".img/horizontal-logo-monochromatic-white.png" alt="Docker logo">
-</p>
-
 À partir du code de l'application, vous devrez remplir le Dockerfile pour créer une image Docker de l'application.
 
 Vous pourrez lors de vos tests, utiliser [Docker Desktop](https://www.docker.com/products/docker-desktop/) pour 
@@ -78,10 +74,6 @@ Vous testerez que l'image et que le conteneur fonctionne bien en local.
 - https://www.tutos.eu/3448
 
 ### Création du Workflow d'Intégration Continue (CI)
-
-<p align="center">
-  <img src=".img/Github-actions-logo.png" alt="GitHub Actions logo">
-</p>
 
 Vous devrez créer le workflow de CI avec GitHub Actions dans `.github/ci.yml`. 
 
@@ -107,10 +99,6 @@ $ curl http://localhost:1234/20 -H "Content-Type: application/json"
 
 ### Création des manifestes Kubernetes
 
-<p align="center">
-  <img src=".img/Kubernetes_logo_without_workmark.svg" alt="Kubernetes logo">
-</p>
-
 Docker Desktop permet également de lancer un Kubernetes local. Vous pourrez développer les manifestes Kubernetes
 pour l'application. Il faudra au préalable que vous buildez l'image docker dans votre registry local (`docker build`).
 En complément, vous aurez besoin de la command [kubectl](https://kubernetes.io/fr/docs/tasks/tools/install-kubectl/).
@@ -133,10 +121,6 @@ Il faudra l'installer sur le cluster Kubernetes (local et sur Azure)
 - https://devopscube.com/create-kubernetes-yaml/
 
 ### Déploiement de l'infrastructure Azure avec Terraform
-
-<p align="center">
-  <img src=".img/Terraform_PrimaryLogo_Color_RGB.png" alt="Terraform logo">
-</p>
 
 Le but final est de déployer l'application Kubernetes dans le cloud d'Azure. Pour cela, il faudra utiliser Terraform.
 Il faudra déployer le réseau ainsi qu'un cluster Kubernetes managé (AKS). 
@@ -162,10 +146,6 @@ travaillez plus sur le TP**
 
 ### Création du Workflow de Déploiement Continu (CD)
 
-<p align="center">
-  <img src=".img/Github-actions-logo.png" alt="GitHub Actions logo">
-</p>
-
 Le workflow de CD va provisionner l'infrastructure avec Terraform. Ensuite, il déploiera l'application dans le cluster
 Azure AKS. Le workflow est à définir dans `.github/cd.yml`.
 
@@ -175,10 +155,6 @@ Azure AKS. Le workflow est à définir dans `.github/cd.yml`.
 - https://github.com/hashicorp/setup-terraform
 
 ### Bonus : Créer un package Helm pour l'application Kubernetes
-
-<p align="center">
-  <img src=".img/helm-icon-color.png" alt="Helm logo">
-</p>
 
 [Helm](https://helm.sh/) est un package manager pour les applications Kubernetes. Il permet de créer un package 
 réutilisable, customisable et de le partager. Le but ici est de convertir les manifestes Kubernetes précédent en Helm 
