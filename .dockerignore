@@ -1,0 +1,6 @@
+app/node_modules
+app/http_reqs
+app/tests
+app/.gitignore
+app/.eslintrc.js
+app/.prettierrc
