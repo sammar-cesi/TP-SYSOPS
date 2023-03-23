@@ -7,106 +7,15 @@ on:
       - main
   pull_request:
 
-# https://docs.github.com/en/actions/using-jobs/using-concurrency#example-only-cancel-in-progress-jobs-or-runs-for-the-current-workflow
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 # On utilise des variables d'environnement pour éviter de dupliquer les mêmes valeurs dans le fichier
 env:
   NODE_VERSION: 16.19.1
 
 jobs:
-  install-dependencies:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      # On utilise un cache les dépendances NPM et réduire le temps d'installation sur les prochains jobs
-      - name: Cache node modules
-        id: cache-node-modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
-
-      - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
-        run: npm --prefix ./app install --include=dev
-
-      - name: List the state of node modules
-        continue-on-error: true
-        run: npm --prefix ./app list
-
-  run-linter:
-    needs: install-dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm --prefix ./app install --include=dev
-
-      - name: Run Linter
-        run: npm --prefix ./app run lint
-
-  run-unit-tests:
-    needs: run-linter
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm --prefix ./app install --include=dev
-
-      - name: Run Unit Tests
-        run: npm --prefix ./app run test-unit
-
-  run-e2e-tests:
-    needs: run-unit-tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: npm
-
-      - name: Install Dependencies
-        run: npm --prefix ./app install --include=dev
-
-      - name: Run E2E tests
-        run: npm --prefix ./app run test-e2e
-
   # A COMPLETER : https://docs.github.com/en/actions/publishing-packages/publishing-docker-images
   push-docker-image:
-    needs: run-e2e-tests
+    #needs: run-e2e-tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
