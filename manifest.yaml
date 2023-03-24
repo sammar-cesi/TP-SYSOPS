@@ -24,3 +24,28 @@ spec:
           - containerPort: 1234
         resources: {}
 status: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-dep
+spec:
+  selector:
+    app: my-dep
+  ports:
+    - port: 1234
+      targetPort: 1234
+      protocol: TCP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-dep
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 1234
+  selector:
+    app: my-dep
